@@ -1,0 +1,161 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Be My Valentine?</title>
+    <style>
+        body {
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+            margin: 0;
+            background-color: #ffe6e6;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            text-align: center;
+            overflow: hidden; 
+            position: relative;
+        }
+
+        .container {
+            background: white;
+            padding: 2rem;
+            border-radius: 20px;
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+            max-width: 85%;
+            z-index: 10;
+            position: relative;
+        }
+
+        #main-gif {
+            width: 200px;
+            height: auto;
+            border-radius: 10px;
+        }
+
+        h1 {
+            color: #d63384;
+            margin-top: 20px;
+        }
+
+        .buttons {
+            margin-top: 30px;
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            align-items: center;
+            min-height: 50px;
+        }
+
+        button {
+            padding: 12px 25px;
+            font-size: 18px;
+            font-weight: bold;
+            border: none;
+            border-radius: 50px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        #yesButton {
+            background-color: #ff4d6d;
+            color: white;
+        }
+
+        #noButton {
+            background-color: #6c757d;
+            color: white;
+            z-index: 1000;
+        }
+
+        /* Heart Animation Styles */
+        .heart {
+            position: absolute;
+            color: #ff4d6d;
+            font-size: 20px;
+            top: -20px;
+            user-select: none;
+            pointer-events: none;
+            animation: fall linear forwards;
+        }
+
+        @keyframes fall {
+            to {
+                transform: translateY(105vh) rotate(360deg);
+            }
+        }
+    </style>
+</head>
+<body>
+
+    <div class="container">
+        <div id="gif-container">
+            <img id="main-gif" src="https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExOHp1eHByZ2t5Z2t5Z2t5Z2t5Z2t5Z2t5Z2t5Z2t5Z2t5Z2t5JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/c7PPW85ZeFvN0L9V5X/giphy.gif" alt="Cute Bear">
+        </div>
+        <h1 id="question">Will You Be My Valentine ❤️</h1>
+        <p id="sub-text">I've been wanting to ask you something really special 💖</p>
+        
+        <div class="buttons">
+            <button id="yesButton">Yes ❤️</button>
+            <button id="noButton">No 🙃</button>
+        </div>
+    </div>
+
+    <script>
+        const yesButton = document.getElementById('yesButton');
+        const noButton = document.getElementById('noButton');
+        const mainGif = document.getElementById('main-gif');
+        const question = document.getElementById('question');
+        const subText = document.getElementById('sub-text');
+
+        // Move the No button randomly
+        function moveNoButton() {
+            noButton.style.position = 'fixed'; // Fixed keeps it relative to viewport
+            
+            const padding = 50;
+            const maxX = window.innerWidth - noButton.offsetWidth - padding;
+            const maxY = window.innerHeight - noButton.offsetHeight - padding;
+            
+            const randomX = Math.max(padding, Math.floor(Math.random() * maxX));
+            const randomY = Math.max(padding, Math.floor(Math.random() * maxY));
+            
+            noButton.style.left = randomX + 'px';
+            noButton.style.top = randomY + 'px';
+        }
+
+        // Interval to move button every 1.5s
+        setInterval(moveNoButton, 350);
+
+        // Instant move on interaction
+        noButton.addEventListener('touchstart', (e) => { e.preventDefault(); moveNoButton(); });
+        noButton.addEventListener('mouseover', moveNoButton);
+
+        // Success Effect: Hearts
+        function createHeart() {
+            const heart = document.createElement('div');
+            heart.classList.add('heart');
+            heart.innerHTML = '❤️';
+            heart.style.left = Math.random() * 100 + 'vw';
+            heart.style.animationDuration = Math.random() * 2 + 3 + 's';
+            heart.style.fontSize = Math.random() * 20 + 10 + 'px';
+            heart.style.opacity = Math.random();
+            document.body.appendChild(heart);
+
+            // Remove heart after animation finishes
+            setTimeout(() => { heart.remove(); }, 5000);
+        }
+
+        yesButton.addEventListener('click', () => {
+            question.innerText = "Yay! See you on the 17th!April ❤️";
+            subText.innerText = "TJ Forever!";
+            noButton.style.display = 'none';
+            yesButton.style.display = 'none';
+            mainGif.src = "https://media.giphy.com/media/v1.Y2lkPTc5MGI3NjExNzh6eGp6eGp6eGp6eGp6eGp6eGp6eGp6eGp6eGp6eGp6JmVwPXYxX2ludGVybmFsX2dpZl9ieV9pZCZjdD1n/MDJ9IbxxvDUQM/giphy.gif";
+            
+            // Start the heart shower
+            setInterval(createHeart, 150);
+        });
+    </script>
+</body>
+</html>
